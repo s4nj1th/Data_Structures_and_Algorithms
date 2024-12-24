@@ -1,4 +1,4 @@
-def bellmanFord(vertices, edges, source):
+def bellman_ford(vertices, edges, source):
     distances = [float('inf')] * vertices
     distances[source] = 0
 
@@ -14,7 +14,7 @@ def bellmanFord(vertices, edges, source):
 
     return distances
 
-def adjacentListToEdges(adj_list):
+def adjacent_list_to_edges(adj_list):
     edges = []
     for u in adj_list:
         for v, weight in adj_list[u]:
@@ -35,11 +35,11 @@ adj_list = {
 vertices = len(adj_list)
 
 # Convert adjacency list to edge list
-edges = adjacentListToEdges(adj_list)
+edges = adjacent_list_to_edges(adj_list)
 
 source = 0
 
-result = bellmanFord(vertices, edges, source)
+result = bellman_ford(vertices, edges, source)
 
 if result != [-1]:
     print("Shortest distances from source: " ,source)
