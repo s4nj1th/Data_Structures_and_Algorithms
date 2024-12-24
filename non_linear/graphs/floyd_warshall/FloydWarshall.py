@@ -1,15 +1,14 @@
-
-def adjacency_list_to_matrix(adj_list, vertices):
+def adjacencyListToMatrix(adjList, vertices):
     matrix = [[float('inf')] * vertices for _ in range(vertices)]
     for i in range(vertices):
         matrix[i][i] = 0  # Distance to self is 0
-    for u in adj_list:
-        for v, weight in adj_list[u]:
+    for u in adjList:
+        for v, weight in adjList[u]:
             matrix[u][v] = weight
     return matrix
 
 
-def floyd_warshall(vertices, graph):
+def floydWarshall(vertices, graph):
     dist = [[graph[i][j] for j in range(vertices)] for i in range(vertices)]
 
     for k in range(vertices):
@@ -23,7 +22,7 @@ def floyd_warshall(vertices, graph):
 
 # Main
 
-adj_list = {
+adjList = {
     0: [(1, 3), (3, 7)],
     1: [(0, 8), (2, 2)],
     2: [(0, 5), (3, 1)],
@@ -32,9 +31,9 @@ adj_list = {
 
 vertices = 4
 
-graph = adjacency_list_to_matrix(adj_list, vertices)
+graph = adjacencyListToMatrix(adjList, vertices)
 
-result = floyd_warshall(vertices, graph)
+result = floydWarshall(vertices, graph)
 
 print("Shortest distances between every pair of vertices:")
 for num,row in enumerate(result):

@@ -1,4 +1,3 @@
-
 # Priority Queue Implementation
 class PriorityQueue:
     def __init__(self):
@@ -8,7 +7,7 @@ class PriorityQueue:
     def parent(self, i):
         return (i - 1) // 2
 
-    def min_heapify(self, i):
+    def minHeapify(self, i):
         left = 2 * i + 1
         right = 2 * i + 2
         smallest = i
@@ -20,7 +19,7 @@ class PriorityQueue:
 
         if smallest != i:
             self.queue[i], self.queue[smallest] = self.queue[smallest], self.queue[i]
-            self.min_heapify(smallest)
+            self.minHeapify(smallest)
 
     def insert(self, key, value):
         self.queue.append((key, value))
@@ -31,21 +30,21 @@ class PriorityQueue:
             self.queue[i], self.queue[self.parent(i)] = self.queue[self.parent(i)], self.queue[i]
             i = self.parent(i)
 
-    def extract_min(self):
+    def extractMin(self):
         if self.size < 1:
             return None
         root = self.queue[0]
         self.queue[0] = self.queue[self.size - 1]
         self.size -= 1
         self.queue.pop()
-        self.min_heapify(0)
+        self.minHeapify(0)
         return root
 
-    def build_min_heap(self, elements):
+    def buildMinHeap(self, elements):
         self.queue = elements
         self.size = len(elements)
         for i in range(self.size // 2 - 1, -1, -1):
-            self.min_heapify(i)
+            self.minHeapify(i)
 
 
 def dijkstra(graph, start):
@@ -55,10 +54,10 @@ def dijkstra(graph, start):
     distances[start] = 0
 
     pq = PriorityQueue()
-    pq.build_min_heap([(distances[vertex], vertex) for vertex in graph])
+    pq.buildMinHeap([(distances[vertex], vertex) for vertex in graph])
 
     while pq.size > 0:
-        _, u = pq.extract_min()
+        _, u = pq.extractMin()
         for v, weight in graph[u]:
             if distances[v] > distances[u] + weight:
                 distances[v] = distances[u] + weight
