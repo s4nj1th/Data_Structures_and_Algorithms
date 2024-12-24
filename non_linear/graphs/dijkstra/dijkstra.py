@@ -48,8 +48,6 @@ class PriorityQueue:
 
 
 def dijkstra(graph, start):
-    """Dijkstra's algorithm for shortest paths from a starting node."""
-
     distances = {vertex: float('inf') for vertex in graph}
     distances[start] = 0
 
