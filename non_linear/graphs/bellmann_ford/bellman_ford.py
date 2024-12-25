@@ -14,7 +14,7 @@ def bellmanFord(vertices, edges, source):
 
     return distances
 
-def adjacenyListToEdges(adj_list):
+def adjacencyListToEdges(adj_list):
     edges = []
     for u in adj_list:
         for v, weight in adj_list[u]:
@@ -35,7 +35,7 @@ adjList = {
 vertices = len(adjList)
 
 # Convert adjacency list to edge list
-edges = adjacenyListToEdges(adjList)
+edges = adjacencyListToEdges(adjList)
 
 source = 0
 
