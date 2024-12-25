@@ -36,5 +36,5 @@ graph = adjacencyListToMatrix(adjList, vertices)
 result = floydWarshall(vertices, graph)
 
 print("Shortest distances between every pair of vertices:")
-for num,row in enumerate(result):
-    print(num ,":",row)
+for num, row in enumerate(result):
+    print(f"Vertex {num}: {row}")
