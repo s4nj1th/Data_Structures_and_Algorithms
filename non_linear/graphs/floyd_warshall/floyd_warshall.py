@@ -2,14 +2,14 @@ def adjacencyListToMatrix(adjList, vertices):
     matrix = [[float('inf')] * vertices for _ in range(vertices)]
     for i in range(vertices):
         matrix[i][i] = 0  # Distance to self is 0
-    for u in adjList:
-        for v, weight in adjList[u]:
+    for u, edges in adjList.items():
+        for v, weight in edges:
             matrix[u][v] = weight
     return matrix
 
 
 def floydWarshall(vertices, graph):
-    dist = [[graph[i][j] for j in range(vertices)] for i in range(vertices)]
+    dist = [row[:] for row in graph]
 
     for k in range(vertices):
         for i in range(vertices):
