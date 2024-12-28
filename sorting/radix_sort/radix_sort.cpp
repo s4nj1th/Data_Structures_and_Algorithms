@@ -10,6 +10,9 @@
 */
 
 #include <iostream>
+#include <cstdlib>
+#include <ctime>
+
 using namespace std;
 
 // Gets the maximum element in array (To find the max number of digits)
@@ -67,20 +70,19 @@ void printArray(int arr[], int num) {
 }
 
 int main() {
-    const int num = 12; // Number of elements in unsorted array
-    int arr[] = {94, 38, 2, 119, 912, 73, 10, 888, 21, 51, 9, 46};
+    const int num = 100; // Number of elements in the unsorted array
+    int arr[num];
 
-    // const int num = 10;
-    // int arr[] = {91, 1000, 28, 64, 29, 222, 19, 9, 3, 52};
-
-    // const int num = 15;
-    // int arr[] = {73, 19, 9, 46, 28, 8, 245, 0, 82, 93, 7, 182, 931, 21, 14};
-
-    // const int num = 250;
-    // int arr[num];
+    // Create a worst case unsorted array (descending elements)
     // for (int i = 0; i < num; i++) {
-    //     arr[i] = num - i; // Create a worst case unsorted array (descending elements)
+    //     arr[i] = num - i; 
     // }
+
+    // Create an unsorted array with random numbers
+    srand((unsigned) time(0));
+    for (int i = 0; i < num; i++) {
+        arr[i] = (rand() % 1000) + 1;
+    }
 
     cout << "Unsorted Array: " << endl;
     printArray(arr, num);
