@@ -67,13 +67,20 @@ void printArray(int arr[], int num) {
 }
 
 int main() {
-    const int num = 250; // Number of elements in the unsorted test array
-    int arr[num];
+    const int num = 12; // Number of elements in unsorted array
+    int arr[] = {94, 38, 2, 119, 912, 73, 10, 888, 21, 51, 9, 46};
 
-    // Create the worst case unsorted array (descending elements)
-    for (int i = 0; i < num; i++) {
-        arr[i] = num - i;
-    }
+    // const int num = 10;
+    // int arr[] = {91, 1000, 28, 64, 29, 222, 19, 9, 3, 52};
+
+    // const int num = 15;
+    // int arr[] = {73, 19, 9, 46, 28, 8, 245, 0, 82, 93, 7, 182, 931, 21, 14};
+
+    // const int num = 250;
+    // int arr[num];
+    // for (int i = 0; i < num; i++) {
+    //     arr[i] = num - i; // Create a worst case unsorted array (descending elements)
+    // }
 
     cout << "Unsorted Array: " << endl;
     printArray(arr, num);
