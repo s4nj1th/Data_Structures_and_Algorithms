@@ -9,9 +9,8 @@ def bellmanFord(vertices, edges, source):
 
     for u, v, weight in edges:
         if distances[u] != float('inf') and distances[v] > distances[u] + weight:
-            print("Negative weight cycle detected.")
-            return [-1]
-
+            return None
+        
     return distances
 
 def adjacencyListToEdges(adj_list):
@@ -39,8 +38,11 @@ edges = adjacencyListToEdges(adjList)
 
 source = 0
 
-result = bellmanFord(vertices, edges, source)
-
-if result != [-1]:
-    print("Shortest distances from source: " ,source)
+try:
+    result = bellmanFord(vertices, edges, source)
+    if result is None:
+        raise ValueError("Negative weight cycle detected.")
+    print(f"Shortest distances from source {source}:")
     print(result)
+except ValueError as e:
+    print(e)

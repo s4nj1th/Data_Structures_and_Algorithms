@@ -7,7 +7,6 @@ def adjacencyListToMatrix(adjList, vertices):
             matrix[u][v] = weight
     return matrix
 
-
 def floydWarshall(vertices, graph):
     dist = [row[:] for row in graph]
 
@@ -16,9 +15,13 @@ def floydWarshall(vertices, graph):
             for j in range(vertices):
                 if dist[i][k] + dist[k][j] < dist[i][j]:
                     dist[i][j] = dist[i][k] + dist[k][j]
+    
+    # Check for negative weight cycles
+    for i in range(vertices):
+        if dist[i][i] < 0:
+            raise ValueError("Negative weight cycle detected.")
 
     return dist
-
 
 # Main
 
@@ -29,12 +32,16 @@ adjList = {
     3: [(0, 2)]
 }
 
-vertices = 4
+vertices = len(adjList)
 
-graph = adjacencyListToMatrix(adjList, vertices)
+try:
+    graph = adjacencyListToMatrix(adjList,vertices)
 
-result = floydWarshall(vertices, graph)
+    result = floydWarshall(vertices, graph)
 
-print("Shortest distances between every pair of vertices:")
-for num, row in enumerate(result):
-    print(f"Vertex {num}: {row}")
+    print("Shortest distances between every pair of vertices:")
+    for num, row in enumerate(result):
+        print(f"Vertex {num}: {row}")
+
+except ValueError as e:
+    print(e)

@@ -1,68 +1,30 @@
 # Priority Queue Implementation
-class PriorityQueue:
-    def __init__(self):
-        self.queue = []
-        self.size = 0
-
-    def parent(self, i):
-        return (i - 1) // 2
-
-    def minHeapify(self, i):
-        left = 2 * i + 1
-        right = 2 * i + 2
-        smallest = i
-
-        if left < self.size and self.queue[left][0] < self.queue[smallest][0]:
-            smallest = left
-        if right < self.size and self.queue[right][0] < self.queue[smallest][0]:
-            smallest = right
-
-        if smallest != i:
-            self.queue[i], self.queue[smallest] = self.queue[smallest], self.queue[i]
-            self.minHeapify(smallest)
-
-    def insert(self, key, value):
-        self.queue.append((key, value))
-        self.size += 1
-        i = self.size - 1
-
-        while i > 0 and self.queue[self.parent(i)][0] > self.queue[i][0]:
-            self.queue[i], self.queue[self.parent(i)] = self.queue[self.parent(i)], self.queue[i]
-            i = self.parent(i)
-
-    def extractMin(self):
-        if self.size < 1:
-            return None
-        root = self.queue[0]
-        self.queue[0] = self.queue[self.size - 1]
-        self.size -= 1
-        self.queue.pop()
-        self.minHeapify(0)
-        return root
-
-    def buildMinHeap(self, elements):
-        self.queue = elements
-        self.size = len(elements)
-        for i in range(self.size // 2 - 1, -1, -1):
-            self.minHeapify(i)
-
+import heapq
 
 def dijkstra(graph, start):
     distances = {vertex: float('inf') for vertex in graph}
     distances[start] = 0
 
-    pq = PriorityQueue()
-    pq.buildMinHeap([(distances[vertex], vertex) for vertex in graph])
+    pq = []
+    heapq.heappush(pq,(0,start))
 
-    while pq.size > 0:
-        _, u = pq.extractMin()
+    while pq:
+        curr_dist, u = heapq.heappop(pq)
+
+        if curr_dist > distances[u]:
+            continue
+
         for v, weight in graph[u]:
-            if distances[v] > distances[u] + weight:
-                distances[v] = distances[u] + weight
-                pq.insert(distances[v], v)
+            if distances[v] > curr_dist + weight:
+                distances[v] = curr_dist + weight
+                heapq.heappush(pq, (distances[v], v))
+
+    # Check for disconnected vertices
+    for vertex in distances:
+        if distances[vertex] == float('inf'):
+            distances[vertex] = "Inf"
 
     return distances
-
 
 graph = {
     "LAX": [("SFO", 337), ("DFW", 1235), ("MIA", 2342)],
