@@ -10,51 +10,35 @@
 */
 
 #include <iostream>
+#include <vector>
 #include <cstdlib>
 #include <ctime>
 
 using namespace std;
 
 // Gets the maximum element in array (To find the max number of digits).
-int getMax(int arr[], int size) {
-    if (size == 0) {
-        cout << "The Array to Sort is Empty!" << endl;
+int getMax(vector<int>& arr) {
+    if (arr.empty()) { 
+        cerr << "The Array to Sort is Empty!" << endl; 
         exit(1);
     }
     int max = arr[0];
-    for (int i = 1; i < size; i++) {
-        if (arr[i] > max) {
-            max = arr[i];
+    for (int num : arr) {
+        if (num > max) {
+            max = num;
         }
     }
     return max;
 }
 
-// Finds the smallest negative number to be used as shift to handle negative number sorting.
-int getShiftVal(int arr[], int size) {
-    int shift = 0;
-    for (int i = 0; i < size; i++) {
-        if (arr[i] < 0 && arr[i] < shift) {
-            shift = arr[i];
-        }
-    }
-    return abs(shift);
-}
-
-// Shifts the elements by shift value to handle negative number sorting.
-void shiftElements(int arr[], int size, int shift) {
-    for (int i = 0; i < size; i++) {
-        arr[i] += shift;
-    }
-}
-
 // Count Sort Algorithm.
-void countSort(int arr[], int size, int pos) {
-    int digit_frequency[10] = {0}; // Sorting decimal numbers here, hence base is 10.
+void countSort(vector<int>& arr, int pos) {
+    int size = arr.size();
+    vector<int> digit_frequency(10, 0); // Sorting decimal numbers here, hence base is 10.
 
     // Increments the freq of elements in each bucket.
-    for (int i = 0; i < size; i++) {
-        ++digit_frequency[(arr[i]/pos) % 10]; 
+    for (int num : arr) {
+        ++digit_frequency[(num/pos) % 10]; 
     }
 
     // Calculates the cumulative frequency.
@@ -63,27 +47,21 @@ void countSort(int arr[], int size, int pos) {
     }
 
     // Builds the sorted array from the right to maintain the stability property of Radix Sort.
-    int sorted_arr[size];
+    vector<int> sorted_arr(size);
     for (int i = size-1; i >= 0; i--) {
         int idx = (arr[i]/pos) % 10;
         sorted_arr[--digit_frequency[idx]] = arr[i]; 
     }
 
-    // Copies the sorted array to the original array.
-    for (int i = 0; i < size; i++) {
-        arr[i] = sorted_arr[i];  
-    }
+    arr = sorted_arr; // Copies the sorted array to the original array.
 }
 
 // Radix Sort Algorithm.
-void radixSort(int arr[], int size) {
-    int max = getMax(arr, size);
-    int shift = getShiftVal(arr, size);
-    shiftElements(arr, size, shift); // Shifts the elements to remove negative values.
+void radixSort(vector<int>& arr) {
+    int max = getMax(arr);
     for(int pos = 1; max/pos > 0; pos *= 10) { 
-        countSort(arr, size, pos); // Calls countSort() for every digit position.
+        countSort(arr, pos); // Calls countSort() for every digit position.
     }
-    shiftElements(arr, size, -shift); // Shifts the elements back to original values after sorting.
 }
 
 // Helper function to print elements of array.
@@ -92,6 +70,37 @@ void printArray(int arr[], int size) {
         cout << arr[i] << " ";
     }
     cout << endl;
+}
+
+void sortArray(int arr[], int size) {
+    vector<int> negative_nums;
+    vector<int> positive_nums;
+
+    // Splits the elements of the array into 2 separate arrays.
+    for (int i = 0; i < size; i++) {
+        if (arr[i] < 0) {
+            negative_nums.push_back(-arr[i]); // Takes the absolute value of the negative nums for Radix Sort.
+        } else {
+            positive_nums.push_back(arr[i]);
+        }
+    }
+
+    // Sorts both arrays independently using Radix Sort.
+    if (!negative_nums.empty()) {
+        radixSort(negative_nums);
+    }
+    if (!positive_nums.empty()) {
+        radixSort(positive_nums);
+    }
+    
+    // Merges the 2 sorted arrays back to original array.
+    int index = 0;
+    for (int i = negative_nums.size()-1; i >= 0; i--) {
+        arr[index++] = -negative_nums[i]; // Converts the numbers back to their negative form.
+    }
+    for (int num : positive_nums) {
+        arr[index++] = num;
+    }
 }
 
 int main() {
@@ -112,7 +121,7 @@ int main() {
     cout << "Unsorted Array: " << endl;
     printArray(arr, size);
 
-    radixSort(arr, size);
+    sortArray(arr, size);
 
     cout << "Sorted Array: " << endl;
     printArray(arr, size);
