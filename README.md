@@ -101,7 +101,9 @@ We’re excited to have you contribute! Whether it’s adding a new algorithm, f
 | [Karthik G](https://github.com/adofm)                            | C++ (.cpp)          |
 | [Saran Hiruthik M](https://github.com/hirux06)                   | C++ (.cpp)          |
 | [Ashwin V A](https://github.com/WinterSun23)                     | C++ (.cpp)          |
+| [Adithya Menon R](https://github.com/adithya-menon-r)            | C++ (.cpp)          |
 | [Leela](https://github.com/Leela0o5)                             | Python (.py)        |
+| [Akshay KS](https://github.com/akshayks13)                       | Python (.py)        |
 | [Jayadev D](https://github.com/FLASH2332)                        | Go (.go)            |
 | [Nandgopal R Nair](https://github.com/Nandgopal-R)               | Go (.go)            |
 | [Keerthivasan S V](https://github.com/Keerthivasan-Venkitajalam) | Markdown (.md)      |
