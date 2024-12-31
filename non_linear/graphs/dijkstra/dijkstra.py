@@ -11,9 +11,6 @@ def dijkstra(graph, start):
     while pq:
         curr_dist, u = heapq.heappop(pq)
 
-        if curr_dist > distances[u]:
-            continue
-
         for v, weight in graph[u]:
             if distances[v] > curr_dist + weight:
                 distances[v] = curr_dist + weight
