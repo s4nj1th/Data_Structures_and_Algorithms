@@ -11,25 +11,11 @@
 
 #include <iostream>
 #include <vector>
+#include <algorithm>
 #include <cstdlib>
 #include <ctime>
 
 using namespace std;
-
-// Gets the maximum element in array (To find the max number of digits).
-int getMax(vector<int>& arr) {
-    if (arr.empty()) { 
-        cerr << "The Array to Sort is Empty!" << endl; 
-        exit(1);
-    }
-    int max = arr[0];
-    for (int num : arr) {
-        if (num > max) {
-            max = num;
-        }
-    }
-    return max;
-}
 
 // Count Sort Algorithm.
 void countSort(vector<int>& arr, int pos) {
@@ -58,28 +44,33 @@ void countSort(vector<int>& arr, int pos) {
 
 // Radix Sort Algorithm.
 void radixSort(vector<int>& arr) {
-    int max = getMax(arr);
+    int max = *max_element(arr.begin(), arr.end());
     for(int pos = 1; max/pos > 0; pos *= 10) { 
         countSort(arr, pos); // Calls countSort() for every digit position.
     }
 }
 
 // Helper function to print elements of array.
-void printArray(int arr[], int size) {
-    for (int i = 0; i < size; i++) {
-        cout << arr[i] << " ";
+void printArray(vector<int>& arr) {
+    for (int num : arr) {
+        cout << num << " ";
     }
     cout << endl;
 }
 
-void sortArray(int arr[], int size) {
+void sortArray(vector<int>& arr) {
+    if (arr.empty()) { 
+        cerr << "The Array to Sort is Empty!" << endl; 
+        exit(1);
+    }
+
     vector<int> negative_nums;
     vector<int> positive_nums;
 
     // Splits the elements of the array into 2 separate arrays.
-    for (int i = 0; i < size; i++) {
+    for (int i = 0; i < arr.size(); i++) {
         if (arr[i] < 0) {
-            negative_nums.push_back(-arr[i]); // Takes the absolute value of the negative nums for Radix Sort.
+            negative_nums.push_back(-arr[i]); // Converts negative numbers to positive for Radix Sort.
         } else {
             positive_nums.push_back(arr[i]);
         }
@@ -105,26 +96,26 @@ void sortArray(int arr[], int size) {
 
 int main() {
     const int size = 20;
-    int arr[size];
+    vector<int> arr(size);
 
     // Create a worst case unsorted array (descending elements).
     // for (int i = 0; i < size; i++) {
     //     arr[i] = size - i; 
     // }
 
-    // Create an unsorted array with random numbers.
+    // Create an unsorted array with random numbers (negative and positive).
     srand((unsigned) time(0));
     for (int i = 0; i < size; i++) {
         arr[i] = (rand() % 1001) - 500;
     }
 
     cout << "Unsorted Array: " << endl;
-    printArray(arr, size);
+    printArray(arr);
 
-    sortArray(arr, size);
+    sortArray(arr);
 
     cout << "Sorted Array: " << endl;
-    printArray(arr, size);
+    printArray(arr);
 
     return 0;
 }
